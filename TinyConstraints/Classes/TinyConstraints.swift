@@ -201,7 +201,19 @@ public extension Constrainable {
     @discardableResult
     public func leadingToTrailing(of view: Constrainable, offset: CGFloat = 0, relation: ConstraintRelation = .equal, priority: LayoutPriority = .required, isActive: Bool = true) -> Constraint {
         prepareForLayout()
-        return leading(to: view, view.trailingAnchor, offset: offset, relation: relation, priority: priority, isActive: isActive)
+        
+        var rightToLeft = false
+        #if os(iOS) || os(tvOS)
+            if #available(iOS 10.0, tvOS 10.0, *) {
+                rightToLeft = (view as? View)?.superview?.effectiveUserInterfaceLayoutDirection == .rightToLeft
+            }
+        #endif
+        
+        if rightToLeft {
+            return leading(to: view, view.trailingAnchor, offset: -offset, relation: relation, priority: priority, isActive: isActive)
+        } else {
+            return leading(to: view, view.trailingAnchor, offset: offset, relation: relation, priority: priority, isActive: isActive)
+        }
     }
     
     @discardableResult
@@ -235,7 +247,20 @@ public extension Constrainable {
     @discardableResult
     public func trailingToLeading(of view: Constrainable, offset: CGFloat = 0, relation: ConstraintRelation = .equal, priority: LayoutPriority = .required, isActive: Bool = true) -> Constraint {
         prepareForLayout()
-        return trailing(to: view, view.leadingAnchor, offset: offset, relation: relation, priority: priority, isActive: isActive)
+        
+        var rightToLeft = false
+        
+        #if os(iOS) || os(tvOS)
+            if #available(iOS 10.0, tvOS 10.0, *) {
+                rightToLeft = (view as? View)?.superview?.effectiveUserInterfaceLayoutDirection == .rightToLeft
+            }
+        #endif
+        
+        if rightToLeft {
+            return trailing(to: view, view.leadingAnchor, offset: offset, relation: relation, priority: priority, isActive: isActive)
+        } else {
+            return trailing(to: view, view.leadingAnchor, offset: -offset, relation: relation, priority: priority, isActive: isActive)
+        }
     }
     
     @discardableResult
