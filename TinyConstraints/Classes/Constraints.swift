@@ -46,7 +46,7 @@ public extension Collection where Iterator.Element == Constraint {
         }
     }
     
-    func deActivate() {
+    func deactivate() {
         
         if let constraints = self as? Constraints {
             Constraint.deactivate(constraints)
