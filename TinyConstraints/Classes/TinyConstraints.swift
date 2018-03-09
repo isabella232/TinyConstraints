@@ -286,7 +286,7 @@ public extension Constrainable {
     @discardableResult
     public func bottomToTop(of view: Constrainable, offset: CGFloat = 0, relation: ConstraintRelation = .equal, priority: LayoutPriority = .required, isActive: Bool = true) -> Constraint {
         prepareForLayout()
-        return bottom(to: view, view.topAnchor, offset: offset, relation: relation, priority: priority, isActive: isActive)
+        return bottom(to: view, view.topAnchor, offset: -offset, relation: relation, priority: priority, isActive: isActive)
     }
     
     @discardableResult
