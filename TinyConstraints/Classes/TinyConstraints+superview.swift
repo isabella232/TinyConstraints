@@ -203,7 +203,7 @@ public extension View {
     @discardableResult
     public func bottomToSuperview( _ anchor: NSLayoutYAxisAnchor? = nil, offset: CGFloat = 0, relation: ConstraintRelation = .equal, priority: LayoutPriority = .required, isActive: Bool = true, usingSafeArea: Bool = false) -> Constraint {
         let constrainable = safeConstrainable(for: superview, usingSafeArea: usingSafeArea)
-        return bottom(to: constrainable, anchor, offset: offset, relation: relation, priority: priority, isActive: isActive)
+        return bottom(to: constrainable, anchor, offset: -offset, relation: relation, priority: priority, isActive: isActive)
     }
     
     @discardableResult
