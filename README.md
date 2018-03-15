@@ -131,7 +131,7 @@ constraints.activate()
 You can also do this in an animation:
 
 ```swift
-oldConstraints.deActivate()
+oldConstraints.deactivate()
 
 constraints.activate()
 UIViewPropertyAnimator(duration: 1, dampingRatio: 0.4) {

@@ -5,7 +5,7 @@ class Collections: UIView {
     var state: State = .first {
         didSet {
             if let previousState = state.previous() {
-                states[previousState.rawValue]?.deActivate()
+                states[previousState.rawValue]?.deactivate()
             }
             states[state.rawValue]?.activate()
         }
@@ -73,7 +73,7 @@ class Collections: UIView {
 extension Collections: Updatable {
     
     func reset() {
-        State.allCases.forEach { states[$0.rawValue]?.deActivate() }
+        State.allCases.forEach { states[$0.rawValue]?.deactivate() }
         states[State.first.rawValue]?.activate()
         subview.backgroundColor = stateColor[State.first.rawValue]
         layoutIfNeeded()
