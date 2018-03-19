@@ -40,11 +40,11 @@
             }
             
             if !excludedEdge.contains(.right) {
-                constraints.append(rightToSuperview(offset: -insets.right))
+                constraints.append(rightToSuperview(offset: insets.right))
             }
             
             if !excludedEdge.contains(.bottom) {
-                constraints.append(bottomToSuperview(offset: -insets.bottom))
+                constraints.append(bottomToSuperview(offset: insets.bottom))
             }
             
             return constraints
@@ -72,12 +72,12 @@
                 }
                 
                 if !(excludedEdge.contains(.trailing) || excludedEdge.contains(.right)) {
-                    constraints.append(rightToSuperview(offset: -insets.right))
+                    constraints.append(rightToSuperview(offset: insets.right))
                 }
             } else {
                 
                 if !(excludedEdge.contains(.leading) || excludedEdge.contains(.right)) {
-                    constraints.append(rightToSuperview(offset: -insets.right))
+                    constraints.append(rightToSuperview(offset: insets.right))
                 }
                 
                 if !(excludedEdge.contains(.trailing) || excludedEdge.contains(.left)) {
@@ -86,7 +86,7 @@
             }
             
             if !excludedEdge.contains(.bottom) {
-                constraints.append(bottomToSuperview(offset: -insets.bottom))
+                constraints.append(bottomToSuperview(offset: insets.bottom))
             }
             
             return constraints
