@@ -47,19 +47,53 @@ public extension Constrainable {
     }
     
     @discardableResult
-    public func edges(to view: Constrainable, insets: TinyEdgeInsets = .zero, priority: LayoutPriority = .required, isActive: Bool = true) -> Constraints {
+    public func edges(to view: Constrainable, excluding excludedEdge: LayoutEdge = .none, insets: TinyEdgeInsets = .zero, priority: LayoutPriority = .required, isActive: Bool = true) -> Constraints {
         prepareForLayout()
         
-        let constraints = [
-            topAnchor.constraint(equalTo: view.topAnchor, constant: insets.top).with(priority),
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: insets.left).with(priority),
-            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -insets.bottom).with(priority),
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -insets.right).with(priority)
-        ]
+        var constraints = Constraints()
         
-        if isActive {
-            Constraint.activate(constraints)
+        if !excludedEdge.contains(.top) {
+            constraints.append(top(to: view, offset: insets.top, priority: priority, isActive: isActive))
         }
+        
+        if !excludedEdge.contains(.bottom) {
+            constraints.append(bottom(to: view, offset: insets.bottom, priority: priority, isActive: isActive))
+        }
+        
+        #if os(iOS) || os(tvOS)
+            var rightToLeft = false
+            if #available(iOS 10.0, tvOS 10.0, *) {
+                if (view as? View)?.superview?.effectiveUserInterfaceLayoutDirection == .rightToLeft {
+                    rightToLeft = true
+                }
+            }
+            
+            if rightToLeft {
+                if !(excludedEdge.contains(.leading) || excludedEdge.contains(.right)) {
+                    constraints.append(right(to: view, offset: insets.right, priority: priority, isActive: isActive))
+                }
+                
+                if !(excludedEdge.contains(.trailing) || excludedEdge.contains(.left)) {
+                    constraints.append(left(to: view, offset: insets.left, priority: priority, isActive: isActive))
+                }
+            } else {
+                if !(excludedEdge.contains(.leading) || excludedEdge.contains(.left)) {
+                    constraints.append(left(to: view, offset: insets.left, priority: priority, isActive: isActive))
+                }
+                
+                if !(excludedEdge.contains(.trailing) || excludedEdge.contains(.right)) {
+                    constraints.append(right(to: view, offset: insets.right, priority: priority, isActive: isActive))
+                }
+            }
+        #else
+            if !excludedEdge.contains(.left) {
+                constraints.append(left(to: view, offset: insets.left, priority: priority, isActive: isActive))
+            }
+        
+            if !excludedEdge.contains(.right) {
+                constraints.append(right(to: view, offset: insets.right, priority: priority, isActive: isActive))
+            }
+        #endif
         
         return constraints
     }
