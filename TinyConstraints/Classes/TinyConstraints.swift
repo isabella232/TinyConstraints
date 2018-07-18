@@ -57,7 +57,7 @@ public extension Constrainable {
         }
         
         if !excludedEdge.contains(.bottom) {
-            constraints.append(bottom(to: view, offset: insets.bottom, priority: priority, isActive: isActive))
+            constraints.append(bottom(to: view, offset: -insets.bottom, priority: priority, isActive: isActive))
         }
         
         #if os(iOS) || os(tvOS)
@@ -74,7 +74,7 @@ public extension Constrainable {
                 }
                 
                 if !(excludedEdge.contains(.trailing) || excludedEdge.contains(.left)) {
-                    constraints.append(left(to: view, offset: insets.left, priority: priority, isActive: isActive))
+                    constraints.append(left(to: view, offset: -insets.left, priority: priority, isActive: isActive))
                 }
             } else {
                 if !(excludedEdge.contains(.leading) || excludedEdge.contains(.left)) {
@@ -82,7 +82,7 @@ public extension Constrainable {
                 }
                 
                 if !(excludedEdge.contains(.trailing) || excludedEdge.contains(.right)) {
-                    constraints.append(right(to: view, offset: insets.right, priority: priority, isActive: isActive))
+                    constraints.append(right(to: view, offset: -insets.right, priority: priority, isActive: isActive))
                 }
             }
         #else
@@ -91,7 +91,7 @@ public extension Constrainable {
             }
         
             if !excludedEdge.contains(.right) {
-                constraints.append(right(to: view, offset: insets.right, priority: priority, isActive: isActive))
+                constraints.append(right(to: view, offset: -insets.right, priority: priority, isActive: isActive))
             }
         #endif
         
