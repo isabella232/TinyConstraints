@@ -122,30 +122,20 @@
         @available(iOS 10.0, *)
         @discardableResult
         func horizontalToSuperview(insets: TinyEdgeInsets = .zero, relation: ConstraintRelation = .equal, priority: LayoutPriority = .required, isActive: Bool = true, usingSafeArea: Bool = false) -> Constraints {
-
-            var constraints = Constraints()
-
-            if effectiveUserInterfaceLayoutDirection == .leftToRight {
-                constraints.append(leftToSuperview(offset: insets.left, relation: relation, priority: priority, isActive: isActive, usingSafeArea: usingSafeArea))
-                constraints.append(rightToSuperview(offset: -insets.right, relation: relation, priority: priority, isActive: isActive, usingSafeArea: usingSafeArea))
-            } else {
-                constraints.append(rightToSuperview(offset: -insets.right, relation: relation, priority: priority, isActive: isActive, usingSafeArea: usingSafeArea))
-                constraints.append(leftToSuperview(offset: insets.left, relation: relation, priority: priority, isActive: isActive, usingSafeArea: usingSafeArea))
-            }
-
-            return constraints
+            return [
+                leftToSuperview(offset: insets.left, relation: relation, priority: priority, isActive: isActive, usingSafeArea: usingSafeArea),
+                rightToSuperview(offset: insets.right, relation: relation, priority: priority, isActive: isActive, usingSafeArea: usingSafeArea)
+            ]
         }
 
         @available(tvOS 10.0, *)
         @available(iOS 10.0, *)
         @discardableResult
         func verticalToSuperview(insets: TinyEdgeInsets = .zero, relation: ConstraintRelation = .equal, priority: LayoutPriority = .required, isActive: Bool = true, usingSafeArea: Bool = false) -> Constraints {
-
-            let constraints = Constraints(arrayLiteral:
+            return [
                 topToSuperview(offset: insets.top, relation: relation, priority: priority, isActive: isActive, usingSafeArea: usingSafeArea),
-                bottomToSuperview(offset: -insets.bottom, relation: relation, priority: priority, isActive: isActive, usingSafeArea: usingSafeArea)
-            )
-            return constraints
+                bottomToSuperview(offset: insets.bottom, relation: relation, priority: priority, isActive: isActive, usingSafeArea: usingSafeArea)
+            ]
         }
     }
 #endif

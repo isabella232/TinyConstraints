@@ -65,12 +65,12 @@ public extension Constrainable {
             }
 
             if rightToLeft {
-                if !(excludedEdge.contains(.leading) || excludedEdge.contains(.right)) {
-                    constraints.append(right(to: view, offset: insets.right, priority: priority, isActive: isActive))
-                }
-
                 if !(excludedEdge.contains(.trailing) || excludedEdge.contains(.left)) {
                     constraints.append(left(to: view, offset: -insets.left, priority: priority, isActive: isActive))
+                }
+
+                if !(excludedEdge.contains(.leading) || excludedEdge.contains(.right)) {
+                    constraints.append(right(to: view, offset: insets.right, priority: priority, isActive: isActive))
                 }
             } else {
                 if !(excludedEdge.contains(.leading) || excludedEdge.contains(.left)) {
@@ -82,11 +82,11 @@ public extension Constrainable {
                 }
             }
         #else
-            if !excludedEdge.contains(.left) {
+            if !(excludedEdge.contains(.leading) || excludedEdge.contains(.left)) {
                 constraints.append(left(to: view, offset: insets.left, priority: priority, isActive: isActive))
             }
 
-            if !excludedEdge.contains(.right) {
+            if !(excludedEdge.contains(.trailing) || excludedEdge.contains(.right)) {
                 constraints.append(right(to: view, offset: -insets.right, priority: priority, isActive: isActive))
             }
         #endif
